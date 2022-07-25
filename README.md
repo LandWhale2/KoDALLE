@@ -19,9 +19,10 @@
 ## Training Process
 
 1. Download dataset from above
-2. Train [VQGAN](https://github.com/kairess/taming-transformers)
-3. Extract `klue/roberta-large` models (run [extract_emb_models.py](extract_emb_models.py))
-3. Train KoDALLE
+2. Preprocess dataset using [preprocess.ipynb](preprocess.ipynb)
+3. Train [VQGAN](https://github.com/kairess/taming-transformers)
+4. Extract `klue/roberta-large` models (run [extract_emb_models.py](extract_emb_models.py))
+5. Train KoDALLE
 
 ## Inference Pipeline
 
