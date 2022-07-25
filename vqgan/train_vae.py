@@ -95,7 +95,7 @@ def train():
                 # temperature anneal
 
                 temp = max(
-                    temp * math.exp(-dVAE_CFG.ANNEAL_RATE * global_step),
+                    temp * math.exp(-float(dVAE_CFG.ANNEAL_RATE) * global_step),
                     dVAE_CFG.TEMP_MIN,
                 )
 
@@ -135,14 +135,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dvae_config",
         type=str,
-        default="/opt/ml/KoDALLE/vqgan/config/dvae_config.yaml",
+        default="../configs/dvae_config.yaml",
         help="",
     )
     parser.add_argument("--save_path", type=str, default="./results_vae")
     parser.add_argument(
         "--image_folder",
         type=str,
-        default="/opt/ml/DALLE-Couture/data/cropped_train_img",
+        default="/home/brad/Dataset/persona-montage/preprocessed/images",
         help="path to your folder of images for learning the discrete VAE and its codebook",
     )
     parser.add_argument("--epochs", type=int, default=20, help="number of epochs")
@@ -162,7 +162,7 @@ if __name__ == "__main__":
         os.mkdir(args.save_path)
 
     with open(args.dvae_config, "r") as f:
-        dvae_config = yaml.load(f)
+        dvae_config = yaml.load(f, yaml.Loader)
         dVAE_CFG = EasyDict(dvae_config["dVAE_CFG"])
 
     # Image Dataset
@@ -210,7 +210,7 @@ if __name__ == "__main__":
     )
 
     run = wandb.init(
-        project="DALLE-Couture", entity="happyface-boostcamp", config=model_config,
+        project="DALLE-Couture", entity="kairess", config=model_config,
     )
 
     train()

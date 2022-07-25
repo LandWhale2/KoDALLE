@@ -70,16 +70,16 @@ class TextImageDataset(Dataset):
         text_file = self.text_files[key]
         image_file = self.image_files[key]
 
-        descriptions = text_file.read_text(encoding="utf-8")
-        descriptions = remove_style(descriptions).split("\n")
-        descriptions = list(filter(lambda t: len(t) > 0, descriptions))
+        description = text_file.read_text(encoding="utf-8")
+        # descriptions = remove_style(descriptions).split("\n")
+        # descriptions = list(filter(lambda t: len(t) > 0, descriptions))
 
-        try:
-            description = choice(descriptions)
-        except IndexError as zero_captions_in_file_ex:
-            print(f"An exception occurred trying to load file {text_file}.")
-            print(f"Skipping index {ind}")
-            return self.skip_sample(ind)
+        # try:
+        #     description = choice(descriptions)
+        # except IndexError as zero_captions_in_file_ex:
+        #     print(f"An exception occurred trying to load file {text_file}.")
+        #     print(f"Skipping index {ind}")
+        #     return self.skip_sample(ind)
 
         # ADD PREPROCESSING FUNCTION HERE
         encoded_dict = self.tokenizer(

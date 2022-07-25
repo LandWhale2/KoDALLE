@@ -126,6 +126,7 @@ class DALLE_Klue_Roberta(nn.Module):
     def generate_images(
         self,
         encoded_text,
+        mask,
         *,
         clip=None,
         filter_thres=0.5,
@@ -134,9 +135,9 @@ class DALLE_Klue_Roberta(nn.Module):
         num_init_img_tokens=None,
         img_num=1,
     ):
-        text = encoded_text['input_ids']
+        text = encoded_text
         text=repeat(text,'() n -> b n',b=img_num)
-        mask=encoded_text['attention_mask']
+        # mask=encoded_text['attention_mask']
         vae, text_seq_len, image_seq_len, num_text_tokens = (
             self.vae,
             self.text_seq_len,

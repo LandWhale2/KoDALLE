@@ -82,11 +82,11 @@ if __name__ == "__main__":
     parser.add_argument(
         "--image_folder",
         type=str,
-        default="/opt/ml/DALLE-Couture/data/cropped_train_img",
+        default="/home/brad/Dataset/persona-montage/preprocessed/images",
         help="",
     )
     parser.add_argument(
-        "--text_folder", type=str, default="/opt/ml/DALLE-Couture/data/train_label",
+        "--text_folder", type=str, default="/home/brad/Dataset/persona-montage/preprocessed/labels",
     )
     parser.add_argument("--batch_size", type=int, default=16, help="")
     parser.add_argument(
@@ -96,10 +96,10 @@ if __name__ == "__main__":
         help="Category of image transformer.",
     )
     parser.add_argument(
-        "--wte", type=str, default="/opt/ml/DALLE-pytorch/roberta_large_wte.pt", help=""
+        "--wte", type=str, default="models/roberta_large_wte.pt", help=""
     )
     parser.add_argument(
-        "--wpe", type=str, default="/opt/ml/DALLE-pytorch/roberta_large_wpe.pt", help=""
+        "--wpe", type=str, default="models/roberta_large_wpe.pt", help=""
     )
     parser.add_argument(
         "--save_path", type=str, default="./results", help="save dalle model path"
@@ -113,13 +113,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--vae_config",
         type=str,
-        default="/opt/ml/KoDALLE/configs/vae_config.yaml",
+        default="configs/vae_config.yaml",
         help="",
     )
     parser.add_argument(
         "--dalle_config",
         type=str,
-        default="/opt/ml/KoDALLE/configs/dalle_config.yaml",
+        default="configs/dalle_config.yaml",
         help="",
     )
 
@@ -129,12 +129,12 @@ if __name__ == "__main__":
 
     # Configuration
     with open(args.vae_config, "r") as f:
-        vae_config = yaml.load(f)
+        vae_config = yaml.load(f, Loader=yaml.Loader)
         VAE_CFG = EasyDict(vae_config["VAE_CFG"])
 
     tokenizer = AutoTokenizer.from_pretrained("klue/roberta-large")  # Korean Tokenizer
     with open(args.dalle_config, "r") as f:
-        dalle_config = yaml.load(f)
+        dalle_config = yaml.load(f, Loader=yaml.Loader)
         DALLE_CFG = EasyDict(dalle_config["DALLE_CFG"])
     DALLE_CFG.VOCAB_SIZE = tokenizer.vocab_size
 
@@ -163,8 +163,8 @@ if __name__ == "__main__":
             transforms.Lambda(
                 lambda img: img.convert("RGB") if img.mode != "RGB" else img
             ),
-            transforms.Resize([VAE_CFG.IMAGE_SIZE, VAE_CFG.IMAGE_SIZE]),
-            # transforms.CenterCrop(VAE_CFG.IMAGE_SIZE),
+            transforms.Resize(VAE_CFG.IMAGE_SIZE),
+            transforms.CenterCrop(VAE_CFG.IMAGE_SIZE),
             transforms.ToTensor(),
         ]
     )
@@ -201,7 +201,7 @@ if __name__ == "__main__":
     # Wandb
     run = wandb.init(
         project="optimization",
-        entity="happyface-boostcamp",
+        entity="kairess",
         resume=False,
         config=dalle_params,
         name=args.wandb_name,  # change it when you experiment
