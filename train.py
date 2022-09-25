@@ -82,11 +82,11 @@ if __name__ == "__main__":
     parser.add_argument(
         "--image_folder",
         type=str,
-        default="/home/brad/Dataset/persona-montage/preprocessed/images",
+        default="/content/drive/MyDrive/Colab Notebooks/preprocessed/images",
         help="",
     )
     parser.add_argument(
-        "--text_folder", type=str, default="/home/brad/Dataset/persona-montage/preprocessed/labels",
+        "--text_folder", type=str, default="/content/drive/MyDrive/Colab Notebooks/preprocessed/labels",
     )
     parser.add_argument("--batch_size", type=int, default=16, help="")
     parser.add_argument(
