@@ -38,12 +38,12 @@ data:
     train:
       target: taming.data.custom.CustomTrain
       params:
-        training_images_list_file: /content/drive/MyDrive/Colab Notebooks/taming-transformers/data/train_500k.txt
+        training_images_list_file: /content/drive/MyDrive/Colab Notebooks/preprocessed/image_list.txt
         size: 256
     validation:
       target: taming.data.custom.CustomTest
       params:
-        test_images_list_file: /content/drive/MyDrive/Colab Notebooks/taming-transformers/data/test_500k.txt
+        test_images_list_file: /content/drive/MyDrive/Colab Notebooks/preprocessed_test/image_list_test.txt
         size: 256
 -gpus: null
 -0,: null
