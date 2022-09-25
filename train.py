@@ -96,10 +96,10 @@ if __name__ == "__main__":
         help="Category of image transformer.",
     )
     parser.add_argument(
-        "--wte", type=str, default="models/roberta_large_wte.pt", help=""
+        "--wte", type=str, default="/content/drive/MyDrive/Colab Notebooks/KoDALLE/models/roberta_large_wte.pt", help=""
     )
     parser.add_argument(
-        "--wpe", type=str, default="models/roberta_large_wpe.pt", help=""
+        "--wpe", type=str, default="/content/drive/MyDrive/Colab Notebooks/KoDALLE/models/roberta_large_wpe.pt", help=""
     )
     parser.add_argument(
         "--save_path", type=str, default="./results", help="save dalle model path"
@@ -113,13 +113,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--vae_config",
         type=str,
-        default="configs/vae_config.yaml",
+        default="/content/drive/MyDrive/Colab Notebooks/KoDALLE/configs/vae_config.yaml",
         help="",
     )
     parser.add_argument(
         "--dalle_config",
         type=str,
-        default="configs/dalle_config.yaml",
+        default="/content/drive/MyDrive/Colab Notebooks/KoDALLE/configs/dalle_config.yaml",
         help="",
     )
 
@@ -191,7 +191,11 @@ if __name__ == "__main__":
     assert len(ds) > 0, "dataset is empty"
 
     dl = DataLoader(ds, batch_size=DALLE_CFG.BATCH_SIZE, shuffle=True, drop_last=True)
-
+    
+    print(f"args : {args}")
+    print(f"vae : {vae}")
+    print(f"dalle_params : {dalle_params}")
+    
     # DALLE Model
     dalle = DALLE_Klue_Roberta(
         vae=vae, wpe_dir=args.wpe, wte_dir=args.wte, **dalle_params,
