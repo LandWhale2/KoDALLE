@@ -9,3 +9,7 @@ Cython==0.29.24
 pre-commit==2.9.3
 split-folders==0.4.3
 ptflops
+adamp
+wandb
+transformers
+dalle_pytorch
